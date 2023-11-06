@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Champions</title>
+    <link rel="stylesheet" href="{% static 'css/campeoes.css' %}">
+    {% block css %}{% endblock css %}
+    <style>
+        body {
+            position: relative;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .modal-background {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px); /* Aplica o efeito de desfoque */
+            z-index: 1;
+        }
+        
+        .modal {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2; /* Coloca o diálogo sobre o fundo escurecido */
+        }
+        
+        .dialog {
+            background: #fff;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    {% block body %}
+    <div style="display: flex; flex-flow: column; width: 100%; height: 100vh;">
+        <div style="display: flex;height: 10vh; width: 100%;">
+            <div style="display: flex; flex-flow: row nowrap; justify-content: end; width: 100%;">
+                <div style="margin-right: 330px; margin-top: 20px; color: #45f3ff;">
+                    <h3>Escolha seu Champion</h3>
+                </div>
+                <div style="margin-right: 0px; margin-top: 20px;">
+                    <form action="{% url "home" %}" method="GET">
+                        <input type="text" name="search" id="search">
+                        <input type="submit" value="Search">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 20px;">
+            <div style="display: flex; flex-flow: row wrap; gap: 80px; justify-content: center; margin-top: 50px;">
+                {% for carta in cartas %}
+                    <div class="card">
+                        <div class="lines"></div>
+                        <div class="imgBx">
+                            <img src="{{carta.img.url}}" alt="{{carta.nome}}">
+                        </div>
+                        <div class="content">
+                            <div class="details">
+                                <h2>
+                                    {{carta.nome}}<br /><span>{{carta.tipo}}</span>
+                                </h2>
+                                <div class="data">
+                                    <h3>{{carta.ataque}}<br /><span>Atk</span></h3>
+                                    <h3>{{carta.vida}}<br /><span>Vida</span></h3>
+                                    <h3>{{carta.habilidade.nome}}<br /><span>Following</span></h3>
+                                </div>
+                                <div class="actionBtn">
+                                    <form action="{% url "fight" carta.pk %}">
+                                        <button>Usar</button>
+                                    </form>
+                                    <form action="{% url 'habilidades' carta.id %}">
+                                        <button class="btnOpen">Habilidades</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+    {% endblock body %}
+
+    {% block js %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const btnOpen = document.querySelector('.btnOpen');
+            const dialog = document.querySelector('.modal');
+            const modalBackground = document.querySelector('.modal-background');
+            const btnClose = document.querySelector('.btnClose');
+
+            btnOpen.addEventListener('click', function() {
+                dialog.style.display = 'block';
+                modalBackground.style.display = 'block';
+            });
+
+            btnClose.addEventListener('click', function() {
+                dialog.style.display = 'none';
+                modalBackground.style.display = 'none';
+            });
+
+            window.addEventListener('click', function(event) {
+                if (event.target === modalBackground) {
+                    dialog.style.display = 'none';
+                    modalBackground.style.display = 'none';
+                }
+            });
+        });
+    </script>
+    {% endblock js %}
+</body>
+<!---->
+</html>

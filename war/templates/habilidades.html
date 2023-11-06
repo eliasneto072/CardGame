@@ -1,0 +1,271 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #333;
+}
+
+.card {
+  position: relative;
+  width: 350px;
+  height: 190px;
+  background: #333;
+  transition: 0.5s;
+}
+
+.habilidades:hover {
+    opacity: 1;
+}
+
+.card .lines {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  overflow: hidden;
+}
+
+.card .lines::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 120px;
+  background: linear-gradient(
+    transparent,
+    #45f3ff,
+    #45f3ff,
+    #45f3ff,
+    transparent
+  );
+  animation: animate 4s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.card .lines::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  background: #292929;
+}
+
+.card .imgBx {
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 200px;
+  background: #000;
+  transition: 0.5s;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.card:hover .imgBx {
+ 
+}
+
+.card .imgBx::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 500px;
+  height: 150px;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(
+    transparent,
+    #ff3c7b,
+    #ff3c7b,
+    #ff3c7b,
+    transparent
+  );
+  animation: animate2 6s linear infinite;
+}
+
+@keyframes animate2 {
+  0% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+}
+
+.card .imgBx::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  background: #292929;
+}
+
+.card .imgBx img {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  filter: grayscale(0);
+  object-fit: cover;
+  transition: 0.5s ease-in;
+}
+
+.card .imgBx:hover img {
+
+}
+
+.card .content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.card .content .details {
+  padding: 40px;
+  text-align: center;
+  width: 100%;
+  transition: 0.5s;
+  transform: translateY(145px);
+}
+
+.card:hover .content .details {
+}
+
+.card .content .details h2 {
+  font-size: 1.25em;
+  font-weight: 600;
+  color: #45f3ff;
+  line-height: 1.2em;
+}
+
+.card .content .details h2 span {
+  font-size: 0.75em;
+  font-weight: 500;
+  color: #fff;
+}
+
+.card .content .details .data {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.card .content .details .data h3 {
+  font-size: 1em;
+  color: #45f3ff;
+  line-height: 1.2em;
+  font-weight: 600;
+}
+
+.card .content .details .data h3 span {
+  font-size: 0.85em;
+  font-weight: 400;
+  color: #fff;
+}
+
+.card .content .details .actionBtn {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.card .content .details .actionBtn button {
+  padding: 10px 30px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  font-size: 1em;
+  font-weight: 500;
+  background: #45f3ff;
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+.card .content .details .actionBtn button:nth-child(2) {
+  background: #fff;
+}
+
+.card .content .details .actionBtn button:hover {
+  opacity: 1;
+}
+
+@media screen and (max-width: 320px) {
+  .card:hover .imgBx {
+    width: 200px;
+    height: 200px;
+  }
+
+  .card:hover .content .details {
+    transform: translateY(-30px);
+  }
+
+  .card .content .details {
+    padding: 15px;
+    transform: translateY(180px);
+  }
+
+  .card .content .details .actionBtn {
+    gap: 20px;
+    flex-direction: column;
+  }
+}
+    </style>
+</head>
+<body style="display: flex; flex-flow: column;justify-content: space-around;">
+    <div class="header" style="width: 100%;">
+        <div class="link" style="margin-left: 50px;">
+           <a href="{% url "home" %}"><img src="https://portal.unila.edu.br/secom/manual-portal/arquivos/seta.png/seta.png" alt="" width="60px" style="transform: scaleX(-1); filter: saturate(0);"></a>
+        </div>
+    </div>
+    <div class="main" style="position: relative;">
+            <div class="card" style="height: 245px;">
+                <div class="lines"></div>
+                <div class="imgBx">
+                    <img src="{{carta.img.url}}" alt="{{carta.nome}}">
+                </div>
+                <div class="content">
+                </div>
+            </div>
+    </div>
+    <div class="habilidades" style="position: absolute; top: 61%; right: 36.9%;">
+       {% for habilidade in habilidades %}
+       <img src="{{habilidade.img.url}}" alt="" width="45px" style="margin-right: 30px; border-radius: 10px; box-shadow: -5px 5px 2px rgba(0, 0, 0, 1);">
+       {% endfor %}
+    </div>
+    <div class="footer">
+    </div>
+</body>
+</html>
