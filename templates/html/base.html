@@ -64,62 +64,13 @@
         <div style="margin-top: 20px;">
             <div style="display: flex; flex-flow: row wrap; gap: 80px; justify-content: center; margin-top: 50px;">
                 {% for carta in cartas %}
-                    <div class="card">
-                        <div class="lines"></div>
-                        <div class="imgBx">
-                            <img src="{{carta.img.url}}" alt="{{carta.nome}}">
-                        </div>
-                        <div class="content">
-                            <div class="details">
-                                <h2>
-                                    {{carta.nome}}<br /><span>{{carta.tipo}}</span>
-                                </h2>
-                                <div class="data">
-                                    <h3>{{carta.ataque}}<br /><span>Atk</span></h3>
-                                    <h3>{{carta.vida}}<br /><span>Vida</span></h3>
-                                    <h3>{{carta.habilidade.nome}}<br /><span>Following</span></h3>
-                                </div>
-                                <div class="actionBtn">
-                                    <form action="{% url "fight" carta.pk %}">
-                                        <button>Usar</button>
-                                    </form>
-                                    <form action="{% url 'habilidades' carta.id %}">
-                                        <button class="btnOpen">Habilidades</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% include "campeoes.html" %}
                 {% endfor %}
             </div>
     {% endblock body %}
 
     {% block js %}
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const btnOpen = document.querySelector('.btnOpen');
-            const dialog = document.querySelector('.modal');
-            const modalBackground = document.querySelector('.modal-background');
-            const btnClose = document.querySelector('.btnClose');
-
-            btnOpen.addEventListener('click', function() {
-                dialog.style.display = 'block';
-                modalBackground.style.display = 'block';
-            });
-
-            btnClose.addEventListener('click', function() {
-                dialog.style.display = 'none';
-                modalBackground.style.display = 'none';
-            });
-
-            window.addEventListener('click', function(event) {
-                if (event.target === modalBackground) {
-                    dialog.style.display = 'none';
-                    modalBackground.style.display = 'none';
-                }
-            });
-        });
-    </script>
+  
     {% endblock js %}
 </body>
 <!---->

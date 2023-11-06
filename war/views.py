@@ -34,5 +34,8 @@ def habilidades(request, id):
 
 def campeoes(request):
     return
-def fight(request):
-    return
+def fight(request, pk):
+    carta = get_object_or_404(Carta, id = pk)
+    bot = Carta.objects.order_by('?').first
+    context = {'carta' : carta, 'bot' : bot}
+    return render(request, 'fight.html', context)
